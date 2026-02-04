@@ -7,6 +7,9 @@
 
 <style>
 body {
+  <audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
   margin: 0;
   height: 100vh;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
@@ -117,6 +120,18 @@ function goYes() {
   window.location.href = "yes.html";
 }
 </script>
+<script>
+const music = document.getElementById("bgMusic");
 
+window.addEventListener("load", () => {
+  music.play().catch(() => {
+    console.log("Autoplay blocked, waiting for interaction");
+  });
+});
+
+document.body.addEventListener("click", () => {
+  music.play();
+}, { once: true });
+</script>
 </body>
 </html>
