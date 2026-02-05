@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>One Question…</title>
 
 <style>
+* {
+  box-sizing: border-box;
+}
+
 body {
-  <audio id="bgMusic" loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
   margin: 0;
   height: 100vh;
   background: linear-gradient(135deg, #ff9a9e, #fad0c4);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Arial', sans-serif;
+  font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
@@ -26,18 +27,19 @@ body {
 }
 
 h1 {
-  color: #b30059;
   font-size: 2rem;
-  margin-bottom: 25px;
+  color: #b30059;
+  margin-bottom: 40px;
 }
 
+/* Buttons */
 .buttons {
   position: relative;
-  height: 80px;
+  height: 100px;
 }
 
 button {
-  padding: 12px 22px;
+  padding: 14px 26px;
   font-size: 1.1rem;
   border: none;
   border-radius: 30px;
@@ -52,16 +54,16 @@ button {
 }
 
 #no {
-  background: #888;
+  background: #999;
   color: white;
-  left: 120px;
+  left: 140px;
 }
 
 /* Floating hearts */
 .heart {
   position: absolute;
+  font-size: 18px;
   color: rgba(255, 0, 102, 0.6);
-  font-size: 20px;
   animation: floatUp 6s linear infinite;
 }
 
@@ -74,7 +76,9 @@ button {
     transform: translateY(-10vh);
     opacity: 0;
   }
-  /* Cat warning overlay */
+}
+
+/* CAT WARNING OVERLAY */
 #catWarning {
   position: fixed;
   top: 0;
@@ -91,16 +95,20 @@ button {
 #catBox {
   text-align: center;
   color: white;
-  animation: pop 0.5s ease;
+  animation: pop 0.4s ease;
 }
 
 #catBox .cat {
-  font-size: 80px;
+  font-size: 90px;
 }
 
 #catBox p {
   font-size: 1.5rem;
   margin-top: 15px;
+}
+
+#catBox small {
+  opacity: 0.7;
 }
 
 @keyframes pop {
@@ -112,81 +120,66 @@ button {
 
 <body>
 
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
-
 <div class="container">
-  <h1>Elia, will you be my Valentine? 💖</h1>
+  <h1>HER_NAME, will you be my Valentine? 💖</h1>
 
   <div class="buttons">
-    <button id="yes" onclick="goYes()">Yes 💕</button>
+    <button id="yes">Yes 💕</button>
     <button id="no">No 🙃</button>
   </div>
 </div>
 
+<!-- CAT OVERLAY -->
+<div id="catWarning">
+  <div id="catBox">
+    <div class="cat">😾🔫</div>
+    <p>stop messing with me</p>
+    <small>(tap anywhere)</small>
+  </div>
+</div>
+
 <script>
-<script>
+/* YES button */
+document.getElementById("yes").addEventListener("click", () => {
+  window.location.href = "yes.html";
+});
+
+/* NO button logic */
 const noBtn = document.getElementById("no");
+const catWarning = document.getElementById("catWarning");
+
 let escapeCount = 0;
 
-noBtn.addEventListener("mouseover", () => {
+noBtn.addEventListener("mouseenter", () => {
   escapeCount++;
 
-  const x = Math.random() * 200 - 100;
-  const y = Math.random() * 150 - 75;
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 160 - 80;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 
   if (escapeCount === 5) {
-    showCat();
+    catWarning.style.display = "flex";
   }
 });
 
-function showCat() {
-  document.getElementById("catWarning").style.display = "flex";
-}
+/* Close cat overlay */
+catWarning.addEventListener("click", () => {
+  catWarning.style.display = "none";
+});
 
-function closeCat() {
-  document.getElementById("catWarning").style.display = "none";
-}
-</script>
-<div id="catWarning" onclick="closeCat()">
-  <div id="catBox">
-    <div class="cat">😾🔫</div>
-    <p>Stop messing with me.</p>
-    <small>(tap to continue)</small>
-  </div>
-</div>
 /* Floating hearts */
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
   heart.innerHTML = "💗";
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 10 + "px";
+  heart.style.fontSize = Math.random() * 20 + 12 + "px";
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 6000);
 }
 setInterval(createHeart, 300);
-
-/* YES redirect */
-function goYes() {
-  window.location.href = "yes.html";
-}
 </script>
-<script>
-const music = document.getElementById("bgMusic");
 
-window.addEventListener("load", () => {
-  music.play().catch(() => {
-    console.log("Autoplay blocked, waiting for interaction");
-  });
-});
-
-document.body.addEventListener("click", () => {
-  music.play();
-}, { once: true });
-</script>
 </body>
 </html>
